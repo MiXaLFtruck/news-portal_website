@@ -286,10 +286,5 @@ LOGGING = {
             'handlers': ['security', ],
             'propagate': True,
         },
-        'news.views': {
-            'handlers': ['general', ],
-            'propagate': False,
-        },
-
     }
 }
