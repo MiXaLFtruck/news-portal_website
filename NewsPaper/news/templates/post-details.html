@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load custom_filters %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h3>{{ post.title | censor }}</h3>
+        <p><i>- {{ post.posted | date:'d M Y, H:i'}} -</i></p>
+        <p>{{ post.text | censor | linebreaksbr }}</p><br>
+    </div>
+    <div class="container-fluid">
+        <a href="{% url 'edit_news' post.id %}" class="btn btn-primary col-lg-12">Редактировать новость</a><br><br>
+        <a href="{% url 'delete_news' post.id %}" class="btn btn-danger col-lg-12">Удалить новость</a><br><br>
+    </div>
+{% endblock content %}

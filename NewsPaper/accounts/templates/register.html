@@ -1,0 +1,64 @@
+{% extends 'accounts_base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+
+        {% for field in form %}
+            {% if field.errors %}
+                <div class="alert alert-dismissible alert-danger">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <form class="form-horizontal" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Регистрация</legend>
+                <div class="form-group">
+<!--                    {{ form.as_p }}<br>-->
+                    <div class="fieldWrapper">
+                        <label for="{{ form.username.id_for_label }}">Имя пользователя (login):</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="fieldWrapper">
+                        <label for="{{ form.first_name.id_for_label }}">Имя:</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="fieldWrapper">
+                        <label for="{{ form.last_name.id_for_label }}">Фамилия:</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div class="fieldWrapper">
+                        <label for="{{ form.email.id_for_label }}">E-mail (обязательно):</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="fieldWrapper">
+                        <label for="{{ form.password1.id_for_label }}">Пароль:</label>
+                        {{ form.password1 }}
+                        {{ form.password1.help_text }}
+                    </div>
+                    <div class="fieldWrapper">
+                        <label for="{{ form.password2.id_for_label }}">Повторите пароль для проверки:</label>
+                        {{ form.password2 }}
+                    </div>
+                    <br><br>
+
+                    <input class="btn btn-primary col-lg-12" type="submit" value="Регистрация">
+                    <p class="center-img">
+                        <a class="btn btn-link" href="/auth/google/login/?process=login"><img
+                                alt="Вход с использованием Google" height="40" src="{% static 'assets/google.jpg' %}"
+                                title="Регистрация и вход с использованием Google"
+                                width="100"></a>
+                    </p>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

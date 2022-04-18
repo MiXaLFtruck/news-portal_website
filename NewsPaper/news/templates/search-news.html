@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load custom_filters %}
+
+{% block content %}
+    <div class="container-fluid">
+        <form method="GET">
+            {{ filter.form }}<br><br>
+            <input type="submit" class="btn btn-primary col-lg-12" value="Найти">
+        </form>
+        {% if search_news %}
+            <br><br><br><p>Всего новостей: {{ posts_total }}</p><br>
+            {% for post in search_news %}
+                <h3>{{ post.title | censor }}</h3>
+                <a href="{% url 'post_details' post.id %}">
+                    <p><i>- {{ post.posted | date:'d M Y, H:i'}} -</i></p>
+                </a>
+                <p>{{ post.text | truncatewords:20 | censor }}</p>
+                <hr>
+            {% endfor %}
+        {% else %}
+            <h1 class="mt-4">Новостей нет</h1>
+        {% endif %}
+        {% if is_paginated %}
+
+            <ul class="pagination pagination-lg">
+                <!-- Если номер страницы 4 и более, даём ссылку на самую первую страницу -->
+                {% if page_obj.number > 3 %}
+                    <li><a href="?{{ request.get_full_path|update_page:1}}">First</a></li>
+                {% endif %}
+
+                <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="active"><a>{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li><a href="?{{ request.get_full_path|update_page:num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.number|add:'2' < page_obj.paginator.num_pages %}
+                    <li><a href="?{{ request.get_full_path|update_page:page_obj.paginator.num_pages }}">Last</a></li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </div>
+
+{% endblock content %}

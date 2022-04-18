@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="col-lg-10"
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>Добавление новости</legend>
+                <div class="form-group">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form }}<br>
+                        <input type="submit" class="btn btn-primary col-lg-12" value="Сохранить">
+                    </form>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}

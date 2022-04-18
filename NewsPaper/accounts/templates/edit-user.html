@@ -1,0 +1,24 @@
+{% extends 'accounts_base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>Профиль</legend>
+                <div class="form-group">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form }}<br>
+                        <input class="btn btn-primary col-lg-12" type="submit" value="Сохранить"><br><br>
+                        {% if is_not_author %}
+                            <a href="{% url 'add-me-to-authors' %}" class="btn btn-info col-lg-12">Хочу в Авторы</a><br><br>
+                        {% endif %}
+                        <a href="{% url 'logout' %}" class="btn btn-danger col-lg-12">Выйти</a>
+                    </form>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock content %}
