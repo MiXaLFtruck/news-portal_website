@@ -1,0 +1,90 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-19 21:07+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%"
+"100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\accounts\forms.py:25
+#, fuzzy
+#| msgid "User"
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: .\accounts\forms.py:27
+msgid "Password"
+msgstr "Пароль"
+
+#: .\accounts\templates\login.html:18
+msgid "Sign-In"
+msgstr "Вход в систему"
+
+#: .\news\models.py:12
+msgid "User"
+msgstr "Имя пользователя"
+
+#: .\news\models.py:13 .\news\models.py:52
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: .\news\models.py:38
+msgid "Category's name"
+msgstr "Категория"
+
+#: .\news\models.py:39
+msgid "Subscribers"
+msgstr "Подписчики"
+
+#: .\news\models.py:46
+msgid "Author"
+msgstr "Автор"
+
+#: .\news\models.py:47
+msgid "Article/News"
+msgstr "Статья/Новость"
+
+#: .\news\models.py:48
+msgid "Posted on"
+msgstr "Опубликовано"
+
+#: .\news\models.py:49
+msgid "Category"
+msgstr "Категория"
+
+#: .\news\models.py:50
+msgid "Title"
+msgstr "Заголовок"
+
+#: .\news\models.py:51
+msgid "Text"
+msgstr "Содержание"
+
+#: .\templates\inc\navbar.html:15
+msgid "Home"
+msgstr "Главная"
+
+#: .\templates\inc\navbar.html:16
+msgid "Add news"
+msgstr "Добавить новость"
+
+#: .\templates\inc\navbar.html:17
+msgid "Search news"
+msgstr "Поиск новостей"
+
+#: .\templates\inc\navbar.html:27
+msgid "Account"
+msgstr "Профиль"

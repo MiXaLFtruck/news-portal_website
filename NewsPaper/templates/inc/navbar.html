@@ -1,7 +1,10 @@
 {% load static %}
+{% load i18n %}
+{% comment %}
 {% load cache %}
 
 {% cache 60 navbar %}
+{% endcomment %}
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -11,21 +14,33 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'news_list' %}">Главная</a></li>
-                <li><a href="{% url 'add_news' %}">Добавить новость</a></li>
-                <li><a href="{% url 'search_news' %}">Поиск новостей</a></li>
+                <li>
+                    <a href="/en{{ request.get_full_path | slice:'3:' }}">
+                        <img src="{% static 'assets/gb.jpg' %}" alt="" height="15">
+                    </a>
+                </li>
+                <li>
+                    <a href="/ru{{ request.get_full_path | slice:'3:' }}">
+                        <img src="{% static 'assets/russia.jpg' %}" alt="" height="15">
+                    </a>
+                </li>
+                <li><a href="{% url 'news_list' %}">{% trans "Home" %}</a></li>
+                <li><a href="{% url 'add_news' %}">{% trans "Add news" %}</a></li>
+                <li><a href="{% url 'search_news' %}">{% trans "Search news" %}</a></li>
                 <li class="dropdown">
                     <a aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" href="#"
                        role="button">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         {% for category in categories %}
-                            <li><a href="{% url 'incategory_list' category.name %}">{{ category.name }}</a></li>
+                            <li><a href="{% url 'incategory_list' category.slug %}">{{ category.name }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>
-                <li><a href="{% url 'edit_profile' %}">Профиль</a></li>
+                <li><a href="{% url 'edit_profile' %}">{% trans "Account" %}</a></li>
             </ul>
         </div>
     </div>
 </nav>
+{% comment %}
 {% endcache %}
+{% endcomment %}

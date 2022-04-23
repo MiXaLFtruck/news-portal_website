@@ -5,26 +5,24 @@
 {% block content %}
     <div class="container-fluid">
         {% if posts %}
-                {% if "category" in request.get_full_path %}
-                <div class="row">
-                    <div class="col-lg-9">
-                        <h1>{{ category }}</h1>
-                    </div>
-                    <div class="col-lg-3">
-                        {% if not user_is_subscribed %}
-                        <a class="btn btn-warning" href="{% url 'subscribe' category %}">Подписаться на новости в
-                            категории</a>
-                        {% endif %}
-                    </div>
+            {% if "category" in request.get_full_path %}
+            <div class="row">
+                <div class="col-lg-9">
+                    <h1>{{ category.name }}</h1>
                 </div>
-                {% else %}
-                    <div>
-                        <h1 class="mt-4">Все новости</h1>
-                    </div>
-                {% endif %}
-                <div>Всего новостей: {{ posts_total }}</div><br>
-
-
+                <div class="col-lg-3">
+                    {% if not user_is_subscribed %}
+                    <a class="btn btn-warning" href="{% url 'subscribe' category.slug %}">Подписаться на новости в
+                        категории</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+                <div>
+                    <h1 class="mt-4">Все новости</h1>
+                </div>
+            {% endif %}
+            <div>Всего новостей: {{ posts_total }}</div><br>
 
             {% for post in posts %}
                 <h3>{{ post.title | censor }}</h3>
@@ -61,6 +59,5 @@
             </ul>
         {% endif %}
     </div>
-
 
 {% endblock content %}

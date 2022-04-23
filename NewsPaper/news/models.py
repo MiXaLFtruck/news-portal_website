@@ -1,16 +1,16 @@
-from django.db import models
 from django.contrib.auth.models import User
-from django.urls import reverse_lazy
-from news.resources.constants import OPTIONS, article
-
 from django.core.cache import cache
+from django.db import models
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from news.resources.constants import OPTIONS, article
 
 # Create your models here.
 
 
 class Author(models.Model):
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0)
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_('User'))
+    rating = models.IntegerField(default=0, verbose_name=_('Rating'))
 
     def update_rating(self):
         updated = 0
@@ -35,21 +35,22 @@ class Author(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    subscribers = models.ManyToManyField(User, null=True, verbose_name='Подписчики')
+    name = models.CharField(max_length=100, unique=True, verbose_name=_("Category's name"))
+    slug = models.SlugField(max_length=100, unique=False, db_index=True, verbose_name='URL')
+    subscribers = models.ManyToManyField(User, null=True, verbose_name=_('Subscribers'))
 
     def __str__(self):
         return self.name
 
 
 class Post(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Автор')
-    article_or_news = models.CharField(max_length=2, choices=OPTIONS, default=article, verbose_name='Статья/Новость')
-    posted = models.DateTimeField(auto_now_add=True, verbose_name='Опубликовано')
-    category = models.ManyToManyField(Category, through='PostCategory', verbose_name='Категория')
-    title = models.CharField(max_length=128, verbose_name='Название')
-    text = models.TextField(verbose_name='Содержание')
-    rating = models.IntegerField(default=0)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name=_('Author'))
+    article_or_news = models.CharField(max_length=2, choices=OPTIONS, default=article, verbose_name=_('Article/News'))
+    posted = models.DateTimeField(auto_now_add=True, verbose_name=_('Posted on'))
+    category = models.ManyToManyField(Category, through='PostCategory', verbose_name=_('Category'))
+    title = models.CharField(max_length=128, verbose_name=_('Title'))
+    text = models.TextField(verbose_name=_('Text'))
+    rating = models.IntegerField(default=0, verbose_name=_('Rating'))
 
     def like(self):
         self.rating += 1

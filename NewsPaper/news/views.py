@@ -1,17 +1,15 @@
+from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import User
+from django.core.cache import cache
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import ContextMixin, View
-from django.urls import reverse_lazy
-from django.contrib.auth.models import User
+
 from .models import Post, Category
-from .forms import PostForm
 from .filters import PostFilter
-
-from django.contrib.auth.mixins import PermissionRequiredMixin
-
-from django.shortcuts import redirect
-from django.contrib import messages
-
-from django.core.cache import cache
+from .forms import PostForm
 
 
 class News(ContextMixin, View):
@@ -60,18 +58,18 @@ class InCategoryList(News, ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        return Post.objects.filter(postcategory__category__name=self.kwargs['name']).order_by('-posted')
+        return Post.objects.filter(postcategory__category__slug=self.kwargs['slug']).order_by('-posted')
 
     def get_context_data(self, **kwargs):
         posts_total = self.get_queryset().count()
         user = self.request.user
-        category = Category.objects.get(name=self.kwargs['name'])
+        category = Category.objects.get(slug=self.kwargs['slug'])
         category_subscribers = User.objects.filter(category=category)
         user_is_subscribed = user in category_subscribers
         return {
             **super().get_context_data(**kwargs),
             'posts_total': posts_total,
-            'category': self.kwargs['name'],
+            'category': category,
             'user_is_subscribed': user_is_subscribed
         }
 
@@ -145,13 +143,13 @@ class DeleteNews(News, DeleteView):
 
 
 # функция подписки на категорию новостей. вешается на кнопку
-def subscribe_for_category(request, name):
+def subscribe_for_category(request, slug):
     current_user = request.user
-    category = Category.objects.get(name=name)
+    category = Category.objects.get(slug=slug)
     if current_user.is_authenticated:
         category.subscribers.add(current_user)
         messages.success(request, f'Вы успешно подписались на новости в категории {category.name}')
-        return redirect('incategory_list', name)
+        return redirect('incategory_list', slug)
     else:
         messages.error(request, 'Для выполнения данного действия необходимо авторизоваться в системе')
         return redirect('login')

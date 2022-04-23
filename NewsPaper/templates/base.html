@@ -21,17 +21,21 @@
             <!-- Navbar -->
             {% include 'inc/navbar.html' %}
 
+            {% comment %}
             {% cache 60 sidebar %}
+            {% endcomment %}
             <!-- Sidebar-->
             <div class="col-lg-3">
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="{% url 'news_list' %}">Все новости</a></li>
                     {% for category in categories %}
-                        <li><a href="{% url 'incategory_list' category.name %}">{{ category.name }}</a></li>
-                    {% endfor %}
+                        <li><a href="{% url 'incategory_list' category.slug %}">{{ category.name }}</a></li>
+            {% endfor %}
                 </ul>
             </div>
+            {% comment %}
             {% endcache %}
+            {% endcomment %}
 
             <div class="col-lg-8">
 

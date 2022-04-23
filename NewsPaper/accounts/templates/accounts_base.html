@@ -23,23 +23,8 @@
         <div class="d-flex" id="wrapper">
 
             <!-- Navbar -->
-            <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="{% url 'news_list' %}">Django News</a>
-                        <a class="navbar-brand" href="{% url 'news_list' %}">
-                        <img src="{% static 'assets/django.png' %}" alt="" width="26" height="26"></a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="{% url 'news_list' %}">Главная</a></li>
-                            <li><a href="{% url 'add_news' %}">Добавить новость</a></li>
-                            <li><a href="{% url 'search_news' %}">Поиск новостей</a></li>
-                            <li><a href="{% url 'edit_profile' %}">Профиль</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            {% include 'inc/navbar.html' %}
+
         </div>
 
         <div class="row">

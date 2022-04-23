@@ -3,7 +3,6 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from django.utils.translation import gettext_lazy as _
-from django.contrib import messages
 
 
 class ProfileForm(forms.ModelForm):
@@ -22,7 +21,8 @@ class ProfileForm(forms.ModelForm):
 
 
 class LoginForm(AuthenticationForm):
-    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'class': 'form-control'}))
+    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'class': 'form-control'}),
+                             label=_("Username"))
     password = forms.CharField(
         label=_("Password"),
         strip=False,
