@@ -5,19 +5,24 @@ from modeltranslation.admin import TranslationAdmin
 # Register your models here.
 
 
-class CategoryAdmin(TranslationAdmin):
+class CategoryTranslationAdmin(TranslationAdmin):
     model = Category
 
 
-class PostAdmin(TranslationAdmin):
+class PostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author', 'posted', 'rating']
+    search_fields = ['title', ]
+
+
+class PostTranslationAdmin(TranslationAdmin):
     model = Post
 
 
-class CommentsAdmin(TranslationAdmin):
+class CommentsTranslationAdmin(TranslationAdmin):
     model = Comments
 
 
 admin.site.register(Category)
-admin.site.register(Post)
+admin.site.register(Post, PostAdmin)
 admin.site.register(Author)
 admin.site.register(Comments)

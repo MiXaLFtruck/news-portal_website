@@ -36,7 +36,7 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name=_("Category's name"))
-    slug = models.SlugField(max_length=100, unique=False, db_index=True, verbose_name='URL')
+    slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name='URL')
     subscribers = models.ManyToManyField(User, null=True, verbose_name=_('Subscribers'))
 
     def __str__(self):
