@@ -10,23 +10,30 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-import os
 from pathlib import Path
+import os
+import environ
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# root = environ.Path(__file__) - 1
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # reading .env file
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rmt&4pl$u$f9%2hn^jbn!e!k&25(ad^*^$c+zui0&r4*q1&1b*'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -85,10 +92,21 @@ WSGI_APPLICATION = 'project_files.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': 5432,
     }
 }
 
@@ -158,9 +176,6 @@ AUTHENTICATION_BACKENDS = [
 SITE_ID = 1
 
 
-DEFAULT_FROM_EMAIL = 'trk.olimp@mail.ru'
-
-
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = True
@@ -171,8 +186,9 @@ ACCOUNT_AUTHENTIFICATION_METHOD = 'email'
 
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 2525
-EMAIL_HOST_USER = 'trk.olimp'
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
